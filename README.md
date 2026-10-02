@@ -43,19 +43,19 @@ Each task must be completed using an iterative process involving LLM suggestions
 
 ### Task 1: Fix the card rank comparison bug
 
-When predicting whether the next card is higher or lower, face cards and tens behave inconsistently. In game_engine.evaluate_guess(), the comparison uses rank_str (e.g., comparing string "10" against "9", or "K" against "Q") instead of comparing numeric ranks. Because strings are compared lexicographically in Python, "10" is evaluated as smaller than "2". Fix the evaluation logic to use numeric_rank so ranks are strictly compared as numbers.
+Face cards and tens behave inconsistently during higher/lower evaluations. Ensure that card comparisons follow actual numerical values rather than alphabetical ordering so all card values evaluate in their true order.
 
-### Task 2: Implement a win streak multiplier
+### Task 2: Implement Consecutive Win Streak Multipliers
 
-Currently, each correct guess only gives a flat +1 point. Implement a streak tracker in game_engine that monitors consecutive correct predictions. Award bonus multipliers or escalating points for maintaining a streak (e.g., 2x points at 3 wins in a row, 3x at 5 wins), and reset the streak counter back to zero on an incorrect guess.
+Correct predictions currently award only a flat score increase with no reward for extended winning runs. Implement a streak tracker that rewards consecutive correct guesses with escalating score multipliers, resetting the bonus back to baseline on an incorrect pick.
 
-### Task 3: Implement tie / push handling
+### Task 3: Implement Tie Evaluation Rules
 
-When the drawn card has the exact same rank as the current card (e.g., 7 of Hearts followed by 7 of Spades), the guess is automatically penalized as incorrect. Implement custom tie/push rules: preserve the player's score and streak, and display a yellow "PUSH / TIE! Rank matched." message rather than deducting a point.
+Drawing a card of identical rank to the current one is currently penalized as a flat loss. Add tie-handling logic that preserves the player's current score and active streak, presenting a neutral "PUSH" notification instead of docking points.
 
 ### Task 4: Implement side-by-side card reveal animation
 
-Currently, the current card immediately switches to the new card on guess submission. Modify game_engine.render() to display both cards side-by-side (the previous card on the left and the newly revealed card on the right) with a brief pause or transition before shifting to the next round, giving the player time to visually confirm both cards.
+The active card currently snaps immediately to the newly drawn card, making rapid comparisons hard to follow visually. Enhance the layout to show the previous and new cards side-by-side with a brief reveal pause before advancing to the next guess
 
 ---
 
