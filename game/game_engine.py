@@ -24,9 +24,6 @@ class GameEngine:
     def evaluate_guess(self, guess):
         """Draws next card and evaluates prediction."""
         self.next_card = self.deck.draw()
-
-        #BUG SYMPTON:
-        #Face and high cards are incorrectly judged lower than small cards.
         
         if guess == "HIGHER":
             correct = self.next_card.rank_str > self.current_card.rank_str
