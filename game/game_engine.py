@@ -27,24 +27,28 @@ class GameEngine:
         """Draws next card and evaluates prediction."""
         self.next_card = self.deck.draw()
         
-        if guess == "HIGHER":
-            correct = self.next_card.numeric_rank > self.current_card.numeric_rank
+        if self.next_card.numeric_rank == self.current_card.numeric_rank:
+            self.status_msg = f"PUSH! {self.next_card.rank_str} vs {self.current_card.rank_str}"
+            self.status_color = (220, 220, 220)
         else:
-            correct = self.next_card.numeric_rank < self.current_card.numeric_rank
-        
-        if correct:
-            self.streak += 1
-            self.multiplier = self.streak
-            points = self.multiplier
-            self.score += points
-            self.status_msg = f"CORRECT! {self.next_card.rank_str} vs {self.current_card.rank_str} (+{points})"
-            self.status_color = (80, 220, 80)
-        else:
-            self.streak = 0
-            self.multiplier = 1
-            self.score = max(0, self.score - 1)
-            self.status_msg = f"WRONG! {self.next_card.rank_str} vs {self.current_card.rank_str}"
-            self.status_color = (235, 75, 75)
+            if guess == "HIGHER":
+                correct = self.next_card.numeric_rank > self.current_card.numeric_rank
+            else:
+                correct = self.next_card.numeric_rank < self.current_card.numeric_rank
+            
+            if correct:
+                self.streak += 1
+                self.multiplier = self.streak
+                points = self.multiplier
+                self.score += points
+                self.status_msg = f"CORRECT! {self.next_card.rank_str} vs {self.current_card.rank_str} (+{points})"
+                self.status_color = (80, 220, 80)
+            else:
+                self.streak = 0
+                self.multiplier = 1
+                self.score = max(0, self.score - 1)
+                self.status_msg = f"WRONG! {self.next_card.rank_str} vs {self.current_card.rank_str}"
+                self.status_color = (235, 75, 75)
 
         self.current_card = self.next_card
 
